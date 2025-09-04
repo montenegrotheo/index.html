@@ -1,10 +1,3 @@
-cd /d/index.html
-git init
-git add .
-git commit -m "First commit"
-git remote add origin https://github.com/yourusername/your-repo.git
-git branch -M main
-git push -u origin main
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,6 +42,7 @@ git push -u origin main
       cursor: pointer;
       font-weight: bold;
       transition: background 0.3s;
+      margin-top: 20px;
     }
 
     button:hover {
@@ -86,12 +80,23 @@ git push -u origin main
       50% { border-color: white; }
     }
 
-    #musicBtn {
-      margin-top: 30px;
+    .yt-button {
+      margin-top: 40px;
     }
 
-    audio {
-      display: none;
+    .yt-button a {
+      text-decoration: none;
+      color: #000;
+      background: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      display: inline-block;
+    }
+
+    .yt-button a:hover {
+      background: #ccc;
     }
   </style>
 </head>
@@ -119,12 +124,12 @@ git push -u origin main
       At nadadala hanggang sa panaginip.
     </div>
 
-    <button id="musicBtn" onclick="playMusic()">▶ Play Music</button>
-    <audio id="bgMusic" loop>
-      <!-- 🔁 Replace this with your hosted MP3 link -->
-      <source src="https://youtu.be/IRMmpzCsyWA?si=axhIi4UXpsNOrb5v" type="audio/mpeg" />
-      Your browser does not support audio.
-    </audio>
+    <!-- YouTube Music Button -->
+    <div class="yt-button">
+      <a href="https://www.youtube.com/watch?v=NmBQJw1t99g" target="_blank">
+        ▶ Play "I'll Be" on YouTube
+      </a>
+    </div>
   </div>
 
   <script>
@@ -136,16 +141,6 @@ git push -u origin main
       } else {
         alert("Maling password.");
       }
-    }
-
-    function playMusic() {
-      const music = document.getElementById("bgMusic");
-      music.play().then(() => {
-        document.getElementById("musicBtn").innerText = "🎵 Playing...";
-        document.getElementById("musicBtn").disabled = true;
-      }).catch(() => {
-        alert("Tap anywhere on the page and try again.");
-      });
     }
   </script>
 
