@@ -80,8 +80,10 @@
       50% { border-color: white; }
     }
 
-    #ytplayer {
-      display: none;
+    #player {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
     }
   </style>
 </head>
@@ -96,7 +98,7 @@
   <!-- Poem Content -->
   <div class="container" id="poemContainer">
     <h1>Angela</h1>
-    <div class="poem" id="poemText">
+    <div class="poem">
       3:18
 
       Eto nanaman at iniisip ka
@@ -109,22 +111,19 @@
       At nadadala hanggang sa panaginip.
     </div>
 
-    <!-- Play YouTube Button -->
+    <!-- Play Music Button -->
     <button onclick="playMusic()">▶ Play Music</button>
 
-    <!-- Hidden YouTube Player -->
-    <iframe
-      id="ytplayer"
-      width="0"
-      height="0"
-      src=""
-      frameborder="0"
-      allow="autoplay"
-      allowfullscreen>
-    </iframe>
+    <!-- YouTube Player (hidden off screen) -->
+    <div id="player"></div>
   </div>
 
+  <!-- Load YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
   <script>
+    let player;
+
     function checkPass() {
       const input = document.getElementById("password").value.trim();
       if (input === "3:18") {
@@ -135,11 +134,31 @@
       }
     }
 
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '0',
+        width: '0',
+        videoId: 'NmBQJw1t99g', // Edwin McCain - I'll Be
+        events: {
+          'onReady': function (event) {
+            // Don't autoplay on load — wait for user click
+          }
+        },
+        playerVars: {
+          autoplay: 0,
+          loop: 1,
+          playlist: 'NmBQJw1t99g'
+        }
+      });
+    }
+
     function playMusic() {
-      const ytplayer = document.getElementById("ytplayer");
-      const videoId = "NmBQJw1t99g"; // Edwin McCain - I'll Be
-      ytplayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}`;
-      ytplayer.style.display = "block";
+      if (player && player.playVideo) {
+        player.setVolume(100);
+        player.playVideo();
+      } else {
+        alert("Player is not ready. Please try again.");
+      }
     }
   </script>
 
