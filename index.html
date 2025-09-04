@@ -10,7 +10,7 @@ git push -u origin main
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Poetry for Angela</title>
+  <title>Angela | 3:18</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -18,12 +18,7 @@ git push -u origin main
       padding: 0;
       background-color: #000;
       font-family: 'Great Vibes', cursive;
-      color: #fff;
-      text-shadow:
-        0 0 5px #fff,
-        0 0 10px #fff,
-        0 0 20px #fff,
-        0 0 40px #fff;
+      color: white;
       height: 100vh;
       display: flex;
       justify-content: center;
@@ -31,26 +26,7 @@ git push -u origin main
       overflow: hidden;
     }
 
-    .container {
-      max-width: 700px;
-      background: rgba(255 255 255 / 0.05);
-      padding: 40px 50px;
-      border-radius: 15px;
-      box-shadow:
-        0 0 20px #fff,
-        inset 0 0 30px #fff;
-      text-align: center;
-      display: none;
-      line-height: 1.8;
-      font-size: 1.8rem;
-    }
-
-    h1 {
-      font-size: 3.5rem;
-      margin-bottom: 15px;
-    }
-
-    .lockscreen {
+    .lockscreen, .container {
       text-align: center;
     }
 
@@ -61,7 +37,6 @@ git push -u origin main
       border: none;
       outline: none;
       margin-right: 12px;
-      font-family: Arial, sans-serif;
     }
 
     button {
@@ -80,6 +55,41 @@ git push -u origin main
       background: #ddd;
     }
 
+    .container {
+      display: none;
+      max-width: 700px;
+      padding: 40px 50px;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+    }
+
+    .poem {
+      font-size: 1.7rem;
+      white-space: pre-wrap;
+      overflow: hidden;
+      border-right: .15em solid white;
+      animation:
+        typing 7s steps(60, end),
+        blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: white; }
+    }
+
+    #musicBtn {
+      margin-top: 30px;
+    }
+
     audio {
       display: none;
     }
@@ -87,52 +97,58 @@ git push -u origin main
 </head>
 <body>
 
-  <!-- Lock Screen -->
+  <!-- Password Lock -->
   <div class="lockscreen" id="lockscreen">
-    <h2>Enter passcode to read the poem</h2>
-    <input type="password" id="password" placeholder="Passcode (hint: 3:18)" />
+    <input type="password" id="password" />
     <button onclick="checkPass()">Unlock</button>
   </div>
 
-  <!-- Poem Container -->
+  <!-- Poem Content -->
   <div class="container" id="poemContainer">
     <h1>Angela</h1>
-    <p>
-      3:18<br><br>
-      Eto nanaman at iniisip ka<br>
-      Iniisip paano kung sabihin kona?.<br><br>
+    <div class="poem" id="poemText">
+      3:18
 
-      Iniisip kung paano sasabihin sayo ng harapan<br>
-      Na ikaw ang nais pag lingkuran.<br><br>
+      Eto nanaman at iniisip ka
+      Iniisip paano kung sabihin kona?.
 
-      Mga masasayang alaala ay naiisip<br>
+      Iniisip kung paano sasabihin sayo ng harapan
+      Na ikaw ang nais pag lingkuran.
+
+      Mga masasayang alaala ay naiisip
       At nadadala hanggang sa panaginip.
-    </p>
+    </div>
 
-    <audio id="bgMusic" autoplay loop>
-      <!--https://youtu.be/IRMmpzCsyWA?si=dscSLkXa6Qc3gqCI -->
-      <source src="your-music-file.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
+    <button id="musicBtn" onclick="playMusic()">▶ Play Music</button>
+    <audio id="bgMusic" loop>
+      <!-- 🔁 Replace this with your hosted MP3 link -->
+      <source src="https://youtu.be/IRMmpzCsyWA?si=axhIi4UXpsNOrb5v" type="audio/mpeg" />
+      Your browser does not support audio.
     </audio>
   </div>
 
   <script>
     function checkPass() {
-      const passInput = document.getElementById('password').value.trim();
-      if (passInput === '318') {
-        document.getElementById('lockscreen').style.display = 'none';
-        document.getElementById('poemContainer').style.display = 'block';
-        const music = document.getElementById('bgMusic');
-        music.play().catch(() => {
-          // Some browsers block autoplay until user interaction
-          alert('Tap anywhere to start the music.');
-          window.addEventListener('click', () => music.play());
-        });
+      const input = document.getElementById("password").value.trim();
+      if (input === "3:18") {
+        document.getElementById("lockscreen").style.display = "none";
+        document.getElementById("poemContainer").style.display = "block";
       } else {
-        alert('Mali ang passcode. Subukan ulit.');
+        alert("Maling password.");
       }
+    }
+
+    function playMusic() {
+      const music = document.getElementById("bgMusic");
+      music.play().then(() => {
+        document.getElementById("musicBtn").innerText = "🎵 Playing...";
+        document.getElementById("musicBtn").disabled = true;
+      }).catch(() => {
+        alert("Tap anywhere on the page and try again.");
+      });
     }
   </script>
 
 </body>
 </html>
+
