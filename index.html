@@ -80,23 +80,8 @@
       50% { border-color: white; }
     }
 
-    .yt-button {
-      margin-top: 40px;
-    }
-
-    .yt-button a {
-      text-decoration: none;
-      color: #000;
-      background: #fff;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 1.1rem;
-      display: inline-block;
-    }
-
-    .yt-button a:hover {
-      background: #ccc;
+    #ytplayer {
+      display: none;
     }
   </style>
 </head>
@@ -124,12 +109,19 @@
       At nadadala hanggang sa panaginip.
     </div>
 
-    <!-- YouTube Music Button -->
-    <div class="yt-button">
-      <a href="https://www.youtube.com/watch?v=NmBQJw1t99g" target="_blank">
-        ▶ Play "I'll Be" on YouTube
-      </a>
-    </div>
+    <!-- Play YouTube Button -->
+    <button onclick="playMusic()">▶ Play Music</button>
+
+    <!-- Hidden YouTube Player -->
+    <iframe
+      id="ytplayer"
+      width="0"
+      height="0"
+      src=""
+      frameborder="0"
+      allow="autoplay"
+      allowfullscreen>
+    </iframe>
   </div>
 
   <script>
@@ -141,6 +133,13 @@
       } else {
         alert("Maling password.");
       }
+    }
+
+    function playMusic() {
+      const ytplayer = document.getElementById("ytplayer");
+      const videoId = "NmBQJw1t99g"; // Edwin McCain - I'll Be
+      ytplayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}`;
+      ytplayer.style.display = "block";
     }
   </script>
 
